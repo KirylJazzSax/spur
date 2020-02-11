@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Actions\Factories\ActionIndexFactory;
+use App\Actions\Factories\TasksActionEditFactory;
+use App\Actions\Factories\TasksActionIndexFactory;
+use App\Actions\Task\ActionEdit;
 use App\Actions\Task\ActionIndex;
-use App\Handler\AboutPageHandler;
-use App\Handler\AboutPageHandlerFactory;
-use App\ReadModel\ReadRepository;
-use App\ReadModel\ReadRepositoryFactory;
 use App\Repositories\TasksRepository;
 use App\RepositoriesFactories\TaskRepositoryFactory;
 
@@ -46,7 +44,8 @@ class ConfigProvider
             ],
             'factories'  => [
                 Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
-                ActionIndex::class => ActionIndexFactory::class,
+                ActionIndex::class => TasksActionIndexFactory::class,
+                ActionEdit::class => TasksActionEditFactory::class,
                 TasksRepository::class => TaskRepositoryFactory::class
             ],
         ];
