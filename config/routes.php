@@ -35,8 +35,18 @@ use Psr\Container\ContainerInterface;
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     $app->get('/', App\Handler\HomePageHandler::class, 'home');
     $app->get('/api/ping', App\Handler\PingHandler::class, 'api.ping');
+
     $app->route('/tasks',
-        \App\Actions\Task\ActionIndex::class,
+        [
+            \App\Actions\Task\ActionIndex::class,
+            \Mezzio\Session\SessionMiddleware::class,
+            \Mezzio\Flash\FlashMessageMiddleware::class,
+        ],
         \Mezzio\Router\Route::HTTP_METHOD_ANY,
         'tasks');
+
+    $app->route('/task/edit/{id}',
+        \App\Actions\Task\ActionEdit::class,
+        \Mezzio\Router\Route::HTTP_METHOD_ANY,
+        'task.edit');
 };
