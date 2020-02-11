@@ -9,6 +9,8 @@
 namespace App\Repositories;
 
 
+use Laminas\Form\Form;
+
 class TasksRepository
 {
     const TODO_STATUS = 1;
@@ -28,5 +30,15 @@ class TasksRepository
         $tasks->bindValue(':status', $status, \PDO::PARAM_INT);
         $tasks->execute();
         return $tasks->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function saveTask(Form $form)
+    {
+        $sql = 'INSERT INTO tasks (title, description, status) VALUES (:title, :description, :status)';
+        $task = $this->pdo->prepare($sql);
+        $task->bindValue(':title', $form->getData()['title'], \PDO::PARAM_STR);
+        $task->bindValue(':description', $form->getData()['description'], \PDO::PARAM_STR);
+        $task->bindValue(':status', $form->getData()['status'], \PDO::PARAM_INT);
+        return $task->execute();
     }
 }

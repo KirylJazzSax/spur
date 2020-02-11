@@ -1,8 +1,11 @@
 {% extends '@layout/default.html.twig' %}
 
-{% block title %}About{% endblock %}
+{% block title %}Tasks{% endblock %}
 
 {% block content %}
+    {% if flash %}
+        <div class="alert alert-success">{{ flash }}</div>
+    {% endif %}
     <h1>Наши задачи</h1>
     <div class="row">
         <div class="col-md-4">
@@ -48,13 +51,13 @@
             </div>
         </div>
     </div>
-
     <button id="button-show" class="btn btn-primary" style="margin: 1em">Создать задачу?</button>
+    <div class="alert alert-danger">Все поля должны быть заполнены и статус должен быть выбран!</div>
     <div class="row">
-        <div class="col-4">
+        <div class="col-4" id="form-container">
             <form action=""
                   method="{{ form.attributes.method }}"
-                  name="form.attributes.method"
+                  name="{{ form.attributes.name }}"
                   style="display: grid; row-gap: 0.5em"
             >
                 <input type="{{ form.elements.csrf.attributes.type }}"
@@ -69,12 +72,11 @@
                 >
 
                 <span>Описание</span>
-                <textarea name="{{ form.elements.title.attributes.name }}"
+                <textarea name="{{ form.elements.description.attributes.name }}"
                           cols="30"
                           rows="10"
-                          {{ form.elements.title.options.required ? 'required' : null}}
-                >
-                </textarea>
+                          {{ form.elements.description.options.required ? 'required' : null}}
+                ></textarea>
 
                 <div>
                     {% for value, status in form.elements.status.valueOptions %}

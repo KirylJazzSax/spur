@@ -14,7 +14,7 @@ use App\Repositories\TasksRepository;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Container\ContainerInterface;
 
-class ActionIndexFactory
+class TasksActionIndexFactory
 {
     public function __invoke(ContainerInterface $container)
     {
